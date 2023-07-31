@@ -6,6 +6,6 @@
                    :db/doc "Description of a task"}
 
                   {:db/ident :task/status
-                   :db/valueType :db.type/string
+                   :db/valueType :db.type/keyword
                    :db/cardinality :db.cardinality/one
-                   :db/doc "Status of a task (PENDING/DONE)"}])
+                   :db/doc "Status of a task [:pending :done]"}])
