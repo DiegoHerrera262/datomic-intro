@@ -8,4 +8,9 @@
                   {:db/ident :task/status
                    :db/valueType :db.type/keyword
                    :db/cardinality :db.cardinality/one
-                   :db/doc "Status of a task [:pending :done]"}])
+                   :db/doc "Status of a task [:pending :done]"}
+
+                  {:db/ident :task/assignee
+                   :db/valueType :db.type/ref
+                   :db/cardinality :db.cardinality/one
+                   :db/doc "User responsible of the task"}])

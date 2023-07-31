@@ -1,23 +1,26 @@
 (ns backend.parser
   (:require
+    [backend.mutations.core :refer [mutations]]
+    [backend.resolvers.core :refer [resolvers]]
+    [datomic.api :as d]
     [com.wsscode.pathom.core :as p]
     [com.wsscode.pathom.connect :as pc]
     [taoensso.timbre :as log]))
 
-(def resolvers [])
+(def registry [resolvers mutations])
 
-(def pathom-parser
+(def parser
   (p/parser {::p/env     {::p/reader                 [p/map-reader
                                                       pc/reader2
                                                       pc/ident-reader
-                                                      pc/index-reader]
+                                                      pc/index-reader
+                                                      p/env-placeholder-reader]
                           ::pc/mutation-join-globals [:tempids]}
              ::p/mutate  pc/mutate
-             ::p/plugins [(pc/connect-plugin {::pc/register resolvers})
+             ::p/plugins [(pc/connect-plugin {::pc/register registry})
                           p/error-handler-plugin
-                          ;; or p/elide-special-outputs-plugin
-                          (p/post-process-parser-plugin p/elide-not-found)]}))
+                          p/trace-plugin]}))
 
 (defn api-parser [query]
   (log/info "Process" query)
-  (pathom-parser {} query))
+  (parser {} query))
