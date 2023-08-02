@@ -17,6 +17,6 @@
                    :db/doc "Status of a task [:pending :done]"}
 
                   {:db/ident :task/assignee
-                   :db/valueType :db.type/ref
+                   :db/valueType :db.type/uuid
                    :db/cardinality :db.cardinality/one
                    :db/doc "User responsible of the task"}])
