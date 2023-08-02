@@ -2,7 +2,6 @@
   (:require
     [backend.mutations.core :refer [mutations]]
     [backend.resolvers.core :refer [resolvers]]
-    [datomic.api :as d]
     [com.wsscode.pathom.core :as p]
     [com.wsscode.pathom.connect :as pc]
     [taoensso.timbre :as log]))
