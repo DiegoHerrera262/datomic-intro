@@ -9,7 +9,11 @@
 (d/create-database db-uri)
 (def conn (d/connect db-uri))
 
+(comment
+  (def res (d/pull (d/db conn) '[:user/name :user/role] [:user/email "alejo_crack_98_new@gmail.com"]))
+  )
+
 ;; Transact the app schemas
 (def transacted-attributes @(d/transact conn (concat
-                   task-schema
-                   user-schema)))
+                                               task-schema
+                                               user-schema)))
