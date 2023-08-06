@@ -1,4 +1,4 @@
-(ns backend.database.schemas.user)
+(ns app.backend.database.schemas.user)
 
 (def user-schema [{:db/ident :user/id
                    :db/valueType :db.type/string

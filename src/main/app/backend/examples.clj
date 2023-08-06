@@ -1,6 +1,6 @@
-(ns backend.examples
+(ns app.backend.examples
   (:require
-    [backend.parser :refer [api-parser]]))
+    [app.backend.parser :refer [api-parser]]))
 
 (comment
   ;; Create operations
@@ -11,7 +11,7 @@
                               :user/email "alejo_crack@gmail.com"
                               :user/role  :reporter})])
   (api-parser '[(create-task {:task/assignee    [:user/id "e07c7577-1ace-4aa5-8b34-0c3a1994ee07"]
-                              :task/description "Simple backend with datomic"})])
+                              :task/description "Simple app.backend with datomic"})])
   (api-parser '[(create-task {:task/assignee    [:user/id "64ea9810-6afb-4cef-83b0-a4dba0444d3c"]
                               :task/description "Model to-many relation with datomic"})])
 
@@ -47,6 +47,18 @@
   (api-parser '[(update-user {:user/id   "64ea9810-6afb-4cef-83b0-a4dba0444d3c"
                               :user/name "alejozen_feli98"})])
   (api-parser '[(update-task {:task/id          "650e0863-059e-4567-a3ba-14191aed9391"
-                              :task/description "New task in queue"
+                              :task/description "Create simple task CRUD in datomic"
                               :task/assignee    [:user/id "64ea9810-6afb-4cef-83b0-a4dba0444d3c"]})])
+  (api-parser '[(update-task {:task/id          "9a344dfd-60ef-4a2e-b4a3-17c7387d2e5f"
+                              :task/description "Join tasks into users"
+                              :task/assignee    [:user/id "64ea9810-6afb-4cef-83b0-a4dba0444d3c"]})])
+
+  ;; Join read operations
+  (api-parser '[{[:user/id "64ea9810-6afb-4cef-83b0-a4dba0444d3c"] [:user/id
+                                                                    :user/name
+                                                                    :user/role
+                                                                    :user/email
+                                                                    {:user/tasks [:task/description
+                                                                                  :task/status
+                                                                                  :task/id]}]}])
   )

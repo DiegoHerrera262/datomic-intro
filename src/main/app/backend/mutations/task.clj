@@ -1,9 +1,9 @@
-(ns backend.mutations.task
+(ns app.backend.mutations.task
   (:require
-    [backend.database.setup :refer [conn]]
-    [backend.database.queries.task :as tq]
+    [app.backend.database.setup :refer [conn]]
+    [app.backend.database.queries.task :as tq]
     [com.wsscode.pathom.connect :as pc]
-    [datomic.api :as d]))
+    [datomic.client.api :as d]))
 
 (pc/defmutation create-task [_ {:task/keys [description assignee]}]
                 {::pc/sym    'create-task
@@ -25,9 +25,6 @@
                                    :task/status      (or status (:task/status prev-data))
                                    :task/assignee    (or assignee (:task/assignee prev-data))}
                       update-transaction (assoc update-data :db/id (:db/id prev-data))]
-                  (if-not (nil? assignee)
-                    @(d/transact conn [{:db/id         (:db/id prev-data)
-                                        :task/assignee :db/retract}]))
                   @(d/transact conn [update-transaction])
                   (assoc update-data :task/id id)))
 

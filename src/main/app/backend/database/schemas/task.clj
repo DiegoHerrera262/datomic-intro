@@ -1,4 +1,4 @@
-(ns backend.database.schemas.task)
+(ns app.backend.database.schemas.task)
 
 (def task-schema [{:db/ident :task/id
                    :db/valueType :db.type/string

@@ -1,7 +1,8 @@
-(ns backend.mutations.user
+(ns app.backend.mutations.user
   (:require
-    [backend.database.setup :refer [conn]]
-    [backend.database.queries.user :as uq]
+    [app.backend.database.setup :refer [conn]]
+    [app.backend.database.queries.user :as uq]
+    [app.backend.database.queries.shared :as shared]
     [com.wsscode.pathom.connect :as pc]
     [datomic.api :as d]))
 
@@ -9,12 +10,10 @@
                 {::pc/sym    'create-user
                  ::pc/params [:user/name :user/role :user/email]
                  ::pc/output [:user/id :user/name :user/roles :user/email]}
-                (let [transact-data {:user/id    (str (java.util.UUID/randomUUID))
-                                     :user/name  name
-                                     :user/role  role
-                                     :user/email email}]
-                  @(d/transact conn [transact-data])
-                  transact-data))
+                (let [transact-data (shared/tx-add conn {:user/name  name
+                                                         :user/role  role
+                                                         :user/email email})]
+                  (shared/remap-id transact-data :user/id)))
 
 (pc/defmutation update-user [_ {:user/keys [id name role email]}]
                 {::pc/sym    'update-user

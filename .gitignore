@@ -1,3 +1,15 @@
-.idea
-.cpcache
+resources/public/js
+
+node_modules
+.pnp.loader.mjs
+.pnp.cjs
+
+# Build cache
+.shadow-cljs
+
+# Editor config
 .nrepl-port
+.idea
+.lsp
+.cpcache
+.clj-kondo

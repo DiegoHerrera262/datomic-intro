@@ -1,7 +1,7 @@
-(ns backend.parser
+(ns app.backend.parser
   (:require
-    [backend.mutations.core :refer [mutations]]
-    [backend.resolvers.core :refer [resolvers]]
+    [app.backend.mutations.core :refer [mutations]]
+    [app.backend.resolvers.core :refer [resolvers]]
     [com.wsscode.pathom.core :as p]
     [com.wsscode.pathom.connect :as pc]
     [taoensso.timbre :as log]))
